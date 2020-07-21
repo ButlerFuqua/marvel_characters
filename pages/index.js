@@ -9,6 +9,8 @@ const params = `?apikey=${process.env.PUB_KEY}&ts=${ts}&hash=${hash}`
 import { useState } from 'react'
 import Link from 'next/link'
 
+import Sidebar from '../components/sidebar'
+
 
 export async function getServerSideProps(context) {
 
@@ -76,20 +78,7 @@ export default function Home({ results }) {
 
       <div id="wrapper">
 
-        <div id="sidebar">
-
-          <form>
-            <label htmlFor="search">Start typing to search.</label>
-            <input onChange={handleSearchChange} id="search" type="text" placeholder="Search..." />
-          </form>
-          <ul>
-            {filteredSeries.map(item => <li>
-              <img src={`${item.thumbnail.path}/standard_small.${item.thumbnail.extension}`} alt={item.title} />
-              {item.title}
-            </li>)}
-          </ul>
-
-        </div>
+        <Sidebar results={results} />
 
         <div id="page_content">
           <main>
@@ -132,27 +121,7 @@ export default function Home({ results }) {
           height: 100%;
           overflow: auto;
         }
-        #sidebar ul {
-          padding: 0;
-          margin: 0;
-        }
-        #sidebar ul li {
-          list-style: none;
-          padding: 1rem;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          
-      
 
-          transition: .3s;
-        }
-        #sidebar ul li:hover {
-          background: #ccc;
-        }
-        #sidebar ul li img {
-          margin-right: 2px;
-        }
 
         #page_content{
           flex: 1;
