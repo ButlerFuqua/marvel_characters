@@ -37,9 +37,8 @@ export async function getServerSideProps(context) {
 export default function Home({ results }) {
 
   const [selectedSeries, setSelectedSeries] = useState({})
-  const [seriesArray, setSeriesArray] = useState(results)
-  const [filteredSeries, setFilteredSeries] = useState(results)
   const [characters, setCharacters] = useState([])
+  const [filteredCharacters, setFilteredCharacters] = useState(characters)
 
 
   const handleSearchChange = ({ target }) => {
@@ -48,11 +47,11 @@ export default function Home({ results }) {
     let { value } = target
 
     // filter based on value
-    let newFilteredSeries = [...seriesArray]
-    newFilteredSeries = newFilteredSeries.filter(item => item.title.toLowerCase().indexOf(value.toLowerCase()) > -1)
+    let newFilteredCharacters = [...characters]
+    newFilteredCharacters = newFilteredCharacters.filter(item => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1)
 
     // Change array
-    setFilteredSeries(newFilteredSeries)
+    setFilteredCharacters(newFilteredCharacters)
   }
 
   const handleSeriesSelect = async series => {
@@ -64,6 +63,7 @@ export default function Home({ results }) {
 
     // set characters
     setCharacters(results)
+    setFilteredCharacters(characters)
     // Show selection in UI if it isn't already selected
     if (series.id !== selectedSeries.id)
       setSelectedSeries(series)
@@ -95,7 +95,7 @@ export default function Home({ results }) {
               <input onChange={handleSearchChange} id="search" type="text" placeholder="Search..." />
             </form>
             <ul>
-              {characters.map(item => (
+              {filteredCharacters.map(item => (
                 <li key={item.id}>
                   <img src={`${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`} alt={item.name} />
                   <Link href="/characters/[id]" as={`/characters/${item.id}`}>
