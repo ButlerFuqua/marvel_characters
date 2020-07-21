@@ -74,30 +74,81 @@ export default function Home({ results }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <form>
-          <label htmlFor="search">Start typing to search.</label>
-          <input onChange={handleSearchChange} id="search" type="text" placeholder="Search..." />
-        </form>
-        <ul>
-          {filteredSeries.map(item => (
-            <li className={item.id === selectedSeries.id ? 'selected' : ``} onClick={() => handleSeriesSelect(item)} key={item.id}>
-              <img src={`${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`} alt={item.title} />
-              <h4>{item.title}</h4>
-              <Link href="/series/[id]" as={`/series/${item.id}`}>
-                <a>View</a>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </main>
+      <div id="wrapper">
 
-      <footer>
-        footer
+        <div id="sidebar">
+          <form>
+            <label htmlFor="search">Start typing to search.</label>
+            <input onChange={handleSearchChange} id="search" type="text" placeholder="Search..." />
+          </form>
+          <ul>
+            {filteredSeries.map(item => <li>
+              <img src={`${item.thumbnail.path}/standard_small.${item.thumbnail.extension}`} alt={item.title} />
+              {item.title}
+            </li>)}
+          </ul>
+
+        </div>
+
+        <div id="page_content">
+          <main>
+            <form>
+              <label htmlFor="search">Start typing to search.</label>
+              <input onChange={handleSearchChange} id="search" type="text" placeholder="Search..." />
+            </form>
+            <ul>
+              {filteredSeries.map(item => (
+                <li className={item.id === selectedSeries.id ? 'selected' : ``} onClick={() => handleSeriesSelect(item)} key={item.id}>
+                  <img src={`${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`} alt={item.title} />
+                  <h4>{item.title}</h4>
+                  <Link href="/series/[id]" as={`/series/${item.id}`}>
+                    <a>View</a>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </main>
+
+          <footer>
+            footer
         </footer>
+        </div>
+      </div>
 
 
       <style jsx>{`
+
+
+        #wrapper{
+          display: flex;
+        }
+
+        #sidebar {
+          width: 280px;
+          border-right: 1px solid #000;
+        }
+        #sidebar ul {
+          padding: 0;
+          margin: 0;
+        }
+        #sidebar ul li {
+          list-style: none;
+          padding: 1rem;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+
+          transition: .3s;
+        }
+        #sidebar ul li:hover {
+          background: #ccc;
+        }
+        #sidebar ul li img {
+          margin-right: 2px;
+        }
+        #page_content{
+          flex: 1;
+        }
 
        main {
          overflow: auto;
@@ -107,10 +158,10 @@ export default function Home({ results }) {
        main ul {
         padding: 0;
         margin: 0;
-        display: flex;
-        flex-wrap: wrap;
         min-height: 100vh;
         overflow-x: hidden;
+        display: flex;
+        flex-wrap: wrap;
        }
        main ul li {
          list-style: none;
@@ -121,6 +172,7 @@ export default function Home({ results }) {
          margin: auto;
          text-align: center;
          border: 2px solid #fff;
+
 
          transition: .3s;
        }
@@ -138,7 +190,7 @@ export default function Home({ results }) {
          max-width: 75%;
        }
 
-       form{
+       main form{
          padding: 1rem;
 
        }
@@ -168,15 +220,17 @@ export default function Home({ results }) {
         body {
           padding: 0;
           margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
           font-size: 16px;
           color: #333;
+          font-family: 'Arial';
         }
+
 
         * {
           box-sizing: border-box;
+        }
+        img {
+          border-radius: 5px;
         }
       `}</style>
     </>
