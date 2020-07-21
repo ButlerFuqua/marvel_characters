@@ -115,14 +115,6 @@ export default function Home({ results }) {
           overflow: hidden;
         }
 
-        #sidebar {
-          width: 280px;
-          border-right: 1px solid #000;
-          height: 100%;
-          overflow: auto;
-        }
-
-
         #page_content{
           flex: 1;
           height: 100%;
