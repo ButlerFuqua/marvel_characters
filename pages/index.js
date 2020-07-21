@@ -97,10 +97,9 @@ export default function Home({ results }) {
             <ul>
               {characters.map(item => (
                 <li key={item.id}>
-                  <img src={`${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`} alt={item.title} />
-                  <h4>{item.title}</h4>
-                  <Link href="/series/[id]" as={`/series/${item.id}`}>
-                    <a>View</a>
+                  <img src={`${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`} alt={item.name} />
+                  <Link href="/characters/[id]" as={`/characters/${item.id}`}>
+                    <a>{item.name}</a>
                   </Link>
                 </li>
               ))}
@@ -145,12 +144,15 @@ export default function Home({ results }) {
        main ul li {
          list-style: none;
          padding: 1rem;
-         cursor: pointer;
          width: 18rem;
          max-width:90%;
          margin: auto;
          text-align: center;
          border: 2px solid #fff;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
 
 
          transition: .3s;
@@ -166,8 +168,9 @@ export default function Home({ results }) {
 
        main ul li img {
          width: 10rem;
-         max-width: 75%;
+         max-width: 100%;
        }
+
 
        main form{
          padding: 1rem;

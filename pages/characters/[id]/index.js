@@ -1,6 +1,9 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import md5 from 'crypto-js/md5'
+import Link from 'next/link'
+
+
 const ts = new Date().getTime()
 const hash = md5(ts + process.env.PRI_KEY + process.env.PUB_KEY).toString()
 const endpoint = `http://gateway.marvel.com/v1/public/`
@@ -13,7 +16,7 @@ export async function getServerSideProps({ query }) {
     const { id } = query
 
     // Fetch data from external API
-    const res = await fetch(`${endpoint}series/${id}${params}`)
+    const res = await fetch(`${endpoint}characters/${id}${params}`)
     const data = await res.json()
 
     const { results } = data.data
@@ -27,24 +30,30 @@ export async function getServerSideProps({ query }) {
 
 
 
-export default function SeriesPage(props) {
+export default function CharactersPage({ name, thumbnail }) {
 
 
-    const { title } = props
 
 
 
     return (
         <>
             <Head>
-                <title>Series page</title>
+                <title>Characters page</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
             <main>
-                Series page
+                Characters page
                 <br />
-                {title}
+                <img src={`${thumbnail.path}/standard_large.${thumbnail.extension}`} alt={name} />
+                <br />
+                {name}
+                <br />
+                <Link href="/" as={`/`}>
+                    <a> Back</a>
+                </Link>
+
             </main>
 
             <footer>
