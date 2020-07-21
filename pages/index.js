@@ -39,21 +39,8 @@ export default function Home({ results }) {
   const [selectedSeries, setSelectedSeries] = useState({})
   const [seriesArray, setSeriesArray] = useState(results)
   const [filteredSeries, setFilteredSeries] = useState(results)
+  const [characters, setCharacters] = useState([])
 
-  const handleSeriesSelect = async series => {
-
-    // Get specific series
-    const res = await fetch(`${endpoint}series/${series.id}${params}`)
-    const data = await res.json()
-    const { results } = data.data
-
-    // Show selection in UI if it isn't already selected
-    if (series.id !== selectedSeries.id)
-      setSelectedSeries(series)
-    // Clear selected series if the same one is selected
-    else setSelectedSeries({})
-
-  }
 
   const handleSearchChange = ({ target }) => {
 
@@ -68,6 +55,23 @@ export default function Home({ results }) {
     setFilteredSeries(newFilteredSeries)
   }
 
+  const handleSeriesSelect = async series => {
+
+    // Get specific series's characters
+    const res = await fetch(`${endpoint}series/${series.id}/characters${params}`)
+    const data = await res.json()
+    const { results } = data.data
+
+    // set characters
+    setCharacters(results)
+    // Show selection in UI if it isn't already selected
+    if (series.id !== selectedSeries.id)
+      setSelectedSeries(series)
+    // Clear selected series if the same one is selected
+    else setSelectedSeries({})
+
+  }
+
 
   return (
     <>
@@ -78,7 +82,11 @@ export default function Home({ results }) {
 
       <div id="wrapper">
 
-        <Sidebar results={results} />
+        <Sidebar
+          results={results}
+          onSeriesSelect={handleSeriesSelect}
+          selectedSeries={selectedSeries}
+        />
 
         <div id="page_content">
           <main>
@@ -87,8 +95,8 @@ export default function Home({ results }) {
               <input onChange={handleSearchChange} id="search" type="text" placeholder="Search..." />
             </form>
             <ul>
-              {filteredSeries.map(item => (
-                <li className={item.id === selectedSeries.id ? 'selected' : ``} onClick={() => handleSeriesSelect(item)} key={item.id}>
+              {characters.map(item => (
+                <li key={item.id}>
                   <img src={`${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`} alt={item.title} />
                   <h4>{item.title}</h4>
                   <Link href="/series/[id]" as={`/series/${item.id}`}>
