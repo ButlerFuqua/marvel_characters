@@ -95,14 +95,19 @@ export default function Home({ results }) {
               <input onChange={handleSearchChange} id="search" type="text" placeholder="Search..." />
             </form>
             <ul>
-              {filteredCharacters.map(item => (
+              {filteredCharacters.length ? filteredCharacters.map(item => (
                 <li key={item.id}>
                   <img src={`${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`} alt={item.name} />
                   <Link href="/characters/[id]" as={`/characters/${item.id}`}>
                     <a>{item.name}</a>
                   </Link>
                 </li>
-              ))}
+              ))
+                :
+                <div className="full_center">
+                  <p>Please select a series from the sidebar.</p>
+                </div>
+              }
             </ul>
           </main>
 
@@ -213,6 +218,13 @@ export default function Home({ results }) {
         }
         img {
           border-radius: 5px;
+        }
+        .full_center{
+          height: 100%;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       `}</style>
     </>
