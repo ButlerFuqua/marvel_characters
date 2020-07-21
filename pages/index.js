@@ -77,6 +77,7 @@ export default function Home({ results }) {
       <div id="wrapper">
 
         <div id="sidebar">
+
           <form>
             <label htmlFor="search">Start typing to search.</label>
             <input onChange={handleSearchChange} id="search" type="text" placeholder="Search..." />
@@ -121,11 +122,15 @@ export default function Home({ results }) {
 
         #wrapper{
           display: flex;
+          height: 100vh;
+          overflow: hidden;
         }
 
         #sidebar {
           width: 280px;
           border-right: 1px solid #000;
+          height: 100%;
+          overflow: auto;
         }
         #sidebar ul {
           padding: 0;
@@ -137,6 +142,8 @@ export default function Home({ results }) {
           cursor: pointer;
           display: flex;
           align-items: center;
+          
+      
 
           transition: .3s;
         }
@@ -146,8 +153,11 @@ export default function Home({ results }) {
         #sidebar ul li img {
           margin-right: 2px;
         }
+
         #page_content{
           flex: 1;
+          height: 100%;
+          overflow: auto;
         }
 
        main {
