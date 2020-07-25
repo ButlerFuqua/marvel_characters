@@ -1,10 +1,10 @@
 import Head from 'next/head'
-import md5 from 'crypto-js/md5'
+// import md5 from 'crypto-js/md5'
 
-const ts = new Date().getTime()
-const hash = md5(ts + process.env.PRI_KEY + process.env.PUB_KEY).toString()
-const endpoint = `http://gateway.marvel.com/v1/public/`
-const params = `?apikey=${process.env.PUB_KEY}&ts=${ts}&hash=${hash}`
+// const ts = new Date().getTime()
+// const hash = md5(ts + process.env.PRI_KEY + process.env.PUB_KEY).toString()
+// const endpoint = `http://gateway.marvel.com/v1/public/`
+// const params = `?apikey=${process.env.PUB_KEY}&ts=${ts}&hash=${hash}`
 import { seriesResponse } from '../fakeapi/series'
 import { charactersResponse } from '../fakeapi/characters'
 
