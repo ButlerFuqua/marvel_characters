@@ -5,6 +5,9 @@ const ts = new Date().getTime()
 const hash = md5(ts + process.env.PRI_KEY + process.env.PUB_KEY).toString()
 const endpoint = `http://gateway.marvel.com/v1/public/`
 const params = `?apikey=${process.env.PUB_KEY}&ts=${ts}&hash=${hash}`
+import { seriesResponse } from '../fakeapi/series'
+import { charactersResponse } from '../fakeapi/characters'
+
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -15,11 +18,14 @@ import Sidebar from '../components/sidebar'
 export async function getServerSideProps(context) {
 
 
-  // Fetch data from external API
-  const res = await fetch(`${endpoint}series${params}&limit=100`)
-  const data = await res.json()
+  // // Fetch data from external API
+  // const res = await fetch(`${endpoint}series${params}&limit=100`)
+  // const data = await res.json()
 
-  let { results } = data.data
+  // let { results } = data.data
+
+  // Fetch data from fake api
+  let results = seriesResponse.data.results
 
   // Remove serires that don't have characters
   results = results.filter(result => result.characters.available)
@@ -56,14 +62,20 @@ export default function Home({ results }) {
 
   const handleSeriesSelect = async series => {
 
-    // Get specific series's characters
-    const res = await fetch(`${endpoint}series/${series.id}/characters${params}`)
-    const data = await res.json()
-    const { results } = data.data
+
+    // // Get specific series's characters
+    // const res = await fetch(`${endpoint}series/${series.id}/characters${params}`)
+    // const data = await res.json()
+    // const { results } = data.data
+
+
+
+    // Fetch data from fake api
+    let results = charactersResponse.data.results
 
     // set characters
     setCharacters(results)
-    setFilteredCharacters(characters)
+    setFilteredCharacters(results)
     // Show selection in UI if it isn't already selected
     if (series.id !== selectedSeries.id)
       setSelectedSeries(series)
