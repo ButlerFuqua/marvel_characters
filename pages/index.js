@@ -169,7 +169,7 @@ export default function Home({ results }) {
             <ul>
               {filteredCharacters.length ? filteredCharacters.map(item => (
                 <li key={item.id}>
-                  {/* <img src={`${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`} alt={item.name} /> */}
+                  <img src={`${item.thumbnail.path.replace('http', 'https')}/standard_large.${item.thumbnail.extension}`} alt={item.name} />
                   <Link href="/characters/[id]" as={`/characters/${item.id}`}>
                     <a>{item.name}</a>
                   </Link>

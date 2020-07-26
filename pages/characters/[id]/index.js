@@ -23,7 +23,7 @@ export default function CharactersPage({ name, thumbnail }) {
             <main>
                 Characters page
                 <br />
-                {/* <img src={`${thumbnail.path}/standard_large.${thumbnail.extension}`} alt={name} /> */}
+                <img src={`${thumbnail.path.replace('http', 'https')}/standard_large.${thumbnail.extension}`} alt={name} />
                 <br />
                 {name}
                 <br />
