@@ -25,8 +25,6 @@ export async function getServerSideProps({ query }) {
     // Get character from static data
     let results = charactersResponse.data.results.filter(character => character.id === 1009159)
 
-
-    // 1009159
     // Pass results to the page via props
     return { props: results[0] }
 
