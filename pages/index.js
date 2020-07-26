@@ -1,232 +1,209 @@
 import Head from 'next/head'
-import styled from 'styled-components'
-// import md5 from 'crypto-js/md5'
-import Layout from '../components/layout'
 
-// const ts = new Date().getTime()
-// const hash = md5(ts + process.env.PRI_KEY + process.env.PUB_KEY).toString()
-// const endpoint = `http://gateway.marvel.com/v1/public/`
-// const params = `?apikey=${process.env.PUB_KEY}&ts=${ts}&hash=${hash}`
-import { seriesResponse } from '../fakeapi/series'
-import { charactersResponse } from '../fakeapi/characters'
-
-
-import { useState } from 'react'
-import Link from 'next/link'
-
-import Sidebar from '../components/sidebar'
-
-
-export async function getServerSideProps(context) {
-
-
-  // // Fetch data from external API
-  // const res = await fetch(`${endpoint}series${params}&limit=100`)
-  // const data = await res.json()
-
-  // let { results } = data.data
-
-  // Fetch data from fake api
-  let results = seriesResponse.data.results
-
-  // Remove serires that don't have characters
-  results = results.filter(result => result.characters.available)
-  // Remove series that don't have an image
-  results = results.filter(result => result.thumbnail.path.indexOf('not_available') == -1)
-
-  // Pass results to the page via props
-  return { props: { results } }
-
-}
-
-const Wrapper = styled.div`
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
-`
-const PageContent = styled.div`
-  flex: 1;
-  height: 100%;
-  overflow: auto;
-`
-
-const Main = styled.main`
-  overflow: auto;
-  padding-bottom: 1rem;
-
-  & ul {
-    padding: 0;
-    margin: 0;
-    min-height: 100vh;
-    overflow-x: hidden;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  & ul li {
-    list-style: none;
-    padding: 1rem;
-    width: 18rem;
-    max-width:90%;
-    margin: auto;
-    text-align: center;
-    border: 2px solid #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-
-    transition: .3s;
-  }
-  & ul li:hover{
-   border: 2px solid #000;
-  } 
-
-  & ul li.selected {
-    background: #222;
-    color: #f1f1f1;
-  }
-
-  & ul li img {
-    width: 10rem;
-    max-width: 100%;
-  }
-
-
-  & form{
-    padding: 1rem;
-
-  }
-`
-
-const Footer = styled.footer`
-  background: #333;
-  color: #ccc;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const Input = styled.input`
-  width: 100%;
-  padding: 5px;
-  font-size: 16px;
-  margin-top: 5px;
-  color: #333;
-`
-
-export default function Home({ results }) {
-
-  const [selectedSeries, setSelectedSeries] = useState({})
-  const [characters, setCharacters] = useState([])
-  const [filteredCharacters, setFilteredCharacters] = useState(characters)
-
-
-  const handleSearchChange = ({ target }) => {
-
-    // get value
-    let { value } = target
-
-    // filter based on value
-    let newFilteredCharacters = [...characters]
-    newFilteredCharacters = newFilteredCharacters.filter(item => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1)
-
-    // Change array
-    setFilteredCharacters(newFilteredCharacters)
-  }
-
-  const handleSeriesSelect = async series => {
-
-
-    // // Get specific series's characters
-    // const res = await fetch(`${endpoint}series/${series.id}/characters${params}`)
-    // const data = await res.json()
-    // const { results } = data.data
-
-
-
-    // Fetch data from fake api
-    let results = charactersResponse.data.results
-
-    // set characters
-    setCharacters(results)
-    setFilteredCharacters(results)
-    // Show selection in UI if it isn't already selected
-    if (series.id !== selectedSeries.id)
-      setSelectedSeries(series)
-    // Clear selected series if the same one is selected
-    else setSelectedSeries({})
-
-  }
-
-
+export default function Home() {
   return (
-    <Layout>
+    <div className="container">
+      <Head>
+        <title>Create Next App</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-      <Wrapper>
+      <main>
+        <h1 className="title">
+          Welcome to <a href="https://nextjs.org">Next.js!</a>
+        </h1>
 
-        <Sidebar
-          results={results}
-          onSeriesSelect={handleSeriesSelect}
-          selectedSeries={selectedSeries}
-        />
+        <p className="description">
+          Get started by editing <code>pages/index.js</code>
+        </p>
 
-        <PageContent id="page_content">
-          <Main>
-            <form>
-              <label htmlFor="search">Start typing to search.</label>
-              <Input onChange={handleSearchChange} id="search" type="text" placeholder="Search..." />
-            </form>
-            <ul>
-              {filteredCharacters.length ? filteredCharacters.map(item => (
-                <li key={item.id}>
-                  <img src={`${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`} alt={item.name} />
-                  <Link href="/characters/[id]" as={`/characters/${item.id}`}>
-                    <a>{item.name}</a>
-                  </Link>
-                </li>
-              ))
-                :
-                <div className="full_center">
-                  <p>Please select a series from the sidebar.</p>
-                </div>
-              }
-            </ul>
-          </Main>
+        <div className="grid">
+          <a href="https://nextjs.org/docs" className="card">
+            <h3>Documentation &rarr;</h3>
+            <p>Find in-depth information about Next.js features and API.</p>
+          </a>
 
-          <Footer>
-            Footer
-        </Footer>
-        </PageContent>
-      </Wrapper>
+          <a href="https://nextjs.org/learn" className="card">
+            <h3>Learn &rarr;</h3>
+            <p>Learn about Next.js in an interactive course with quizzes!</p>
+          </a>
 
+          <a
+            href="https://github.com/zeit/next.js/tree/master/examples"
+            className="card"
+          >
+            <h3>Examples &rarr;</h3>
+            <p>Discover and deploy boilerplate example Next.js projects.</p>
+          </a>
+
+          <a
+            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            className="card"
+          >
+            <h3>Deploy &rarr;</h3>
+            <p>
+              Instantly deploy your Next.js site to a public URL with Vercel.
+            </p>
+          </a>
+        </div>
+      </main>
+
+      <footer>
+        <a
+          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Powered by{' '}
+          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
+        </a>
+      </footer>
+
+      <style jsx>{`
+        .container {
+          min-height: 100vh;
+          padding: 0 0.5rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+
+        main {
+          padding: 5rem 0;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+
+        footer {
+          width: 100%;
+          height: 100px;
+          border-top: 1px solid #eaeaea;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        footer img {
+          margin-left: 0.5rem;
+        }
+
+        footer a {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+
+        .title a {
+          color: #0070f3;
+          text-decoration: none;
+        }
+
+        .title a:hover,
+        .title a:focus,
+        .title a:active {
+          text-decoration: underline;
+        }
+
+        .title {
+          margin: 0;
+          line-height: 1.15;
+          font-size: 4rem;
+        }
+
+        .title,
+        .description {
+          text-align: center;
+        }
+
+        .description {
+          line-height: 1.5;
+          font-size: 1.5rem;
+        }
+
+        code {
+          background: #fafafa;
+          border-radius: 5px;
+          padding: 0.75rem;
+          font-size: 1.1rem;
+          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+        }
+
+        .grid {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+
+          max-width: 800px;
+          margin-top: 3rem;
+        }
+
+        .card {
+          margin: 1rem;
+          flex-basis: 45%;
+          padding: 1.5rem;
+          text-align: left;
+          color: inherit;
+          text-decoration: none;
+          border: 1px solid #eaeaea;
+          border-radius: 10px;
+          transition: color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .card:hover,
+        .card:focus,
+        .card:active {
+          color: #0070f3;
+          border-color: #0070f3;
+        }
+
+        .card h3 {
+          margin: 0 0 1rem 0;
+          font-size: 1.5rem;
+        }
+
+        .card p {
+          margin: 0;
+          font-size: 1.25rem;
+          line-height: 1.5;
+        }
+
+        .logo {
+          height: 1em;
+        }
+
+        @media (max-width: 600px) {
+          .grid {
+            width: 100%;
+            flex-direction: column;
+          }
+        }
+      `}</style>
 
       <style jsx global>{`
         html,
         body {
           padding: 0;
           margin: 0;
-          font-size: 16px;
-          color: #333;
-          font-family: 'Arial';
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
         }
-
 
         * {
           box-sizing: border-box;
         }
-        img {
-          border-radius: 5px;
-        }
-        .full_center{
-          height: 100%;
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
       `}</style>
-    </Layout>
+    </div>
   )
 }
