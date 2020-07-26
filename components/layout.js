@@ -11,7 +11,7 @@ export default function Layout({ children }) {
                 <meta name='keywords' content='Keywords' />
                 <title>Marvel Characters</title>
 
-                <link rel='manifest' href='/manifest.json' />
+                <link rel='manifest' href='/site.webmanifest' />
                 <link href='/favicon-16x16.png' rel='icon' type='image/png' sizes='16x16' />
                 <link href='/favicon-32x32.png' rel='icon' type='image/png' sizes='32x32' />
                 <link rel='apple-touch-icon' href='/apple-icon.png'></link>
