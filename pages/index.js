@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import styled from 'styled-components'
 // import md5 from 'crypto-js/md5'
 
 // const ts = new Date().getTime()
@@ -37,8 +38,82 @@ export async function getServerSideProps(context) {
 
 }
 
+const Wrapper = styled.div`
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+`
+const PageContent = styled.div`
+  flex: 1;
+  height: 100%;
+  overflow: auto;
+`
+
+const Main = styled.main`
+  overflow: auto;
+  padding-bottom: 1rem;
+
+  & ul {
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  & ul li {
+    list-style: none;
+    padding: 1rem;
+    width: 18rem;
+    max-width:90%;
+    margin: auto;
+    text-align: center;
+    border: 2px solid #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
 
+    transition: .3s;
+  }
+  & ul li:hover{
+   border: 2px solid #000;
+  } 
+
+  & ul li.selected {
+    background: #222;
+    color: #f1f1f1;
+  }
+
+  & ul li img {
+    width: 10rem;
+    max-width: 100%;
+  }
+
+
+  & form{
+    padding: 1rem;
+
+  }
+`
+
+const Footer = styled.footer`
+  background: #333;
+  color: #ccc;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const Input = styled.input`
+  width: 100%;
+  padding: 5px;
+  font-size: 16px;
+  margin-top: 5px;
+  color: #333;
+`
 
 export default function Home({ results }) {
 
@@ -92,7 +167,7 @@ export default function Home({ results }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div id="wrapper">
+      <Wrapper>
 
         <Sidebar
           results={results}
@@ -100,11 +175,11 @@ export default function Home({ results }) {
           selectedSeries={selectedSeries}
         />
 
-        <div id="page_content">
-          <main>
+        <PageContent id="page_content">
+          <Main>
             <form>
               <label htmlFor="search">Start typing to search.</label>
-              <input onChange={handleSearchChange} id="search" type="text" placeholder="Search..." />
+              <Input onChange={handleSearchChange} id="search" type="text" placeholder="Search..." />
             </form>
             <ul>
               {filteredCharacters.length ? filteredCharacters.map(item => (
@@ -121,98 +196,14 @@ export default function Home({ results }) {
                 </div>
               }
             </ul>
-          </main>
+          </Main>
 
-          <footer>
-            footer
-        </footer>
-        </div>
-      </div>
+          <Footer>
+            Footer
+        </Footer>
+        </PageContent>
+      </Wrapper>
 
-
-      <style jsx>{`
-
-
-        #wrapper{
-          display: flex;
-          height: 100vh;
-          overflow: hidden;
-        }
-
-        #page_content{
-          flex: 1;
-          height: 100%;
-          overflow: auto;
-        }
-
-       main {
-         overflow: auto;
-         padding-bottom: 1rem;
-       }
-
-       main ul {
-        padding: 0;
-        margin: 0;
-        min-height: 100vh;
-        overflow-x: hidden;
-        display: flex;
-        flex-wrap: wrap;
-       }
-       main ul li {
-         list-style: none;
-         padding: 1rem;
-         width: 18rem;
-         max-width:90%;
-         margin: auto;
-         text-align: center;
-         border: 2px solid #fff;
-         display: flex;
-         flex-direction: column;
-         justify-content: center;
-         align-items: center;
-
-
-         transition: .3s;
-       }
-       main ul li:hover{
-        border: 2px solid #000;
-       } 
-
-       main ul li.selected {
-         background: #222;
-         color: #f1f1f1;
-       }
-
-       main ul li img {
-         width: 10rem;
-         max-width: 100%;
-       }
-
-
-       main form{
-         padding: 1rem;
-
-       }
-
-       label, input[type="text"] {
-         width: 100%;
-       }
-       input[type="text"] {
-        padding: 5px;
-        font-size: 16px;
-        margin-top: 5px;
-        color: #333;
-       }
-
-       footer{
-         background: #333;
-         color: #ccc;
-         padding: 1rem;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-       }
-      `}</style>
 
       <style jsx global>{`
         html,
