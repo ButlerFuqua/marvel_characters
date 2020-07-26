@@ -3,6 +3,7 @@ import Head from 'next/head'
 // import md5 from 'crypto-js/md5'
 import Link from 'next/link'
 import { charactersResponse } from '../../../fakeapi/characters'
+import Layout from '../../../components/layout'
 
 
 // const ts = new Date().getTime()
@@ -40,12 +41,7 @@ export default function CharactersPage({ name, thumbnail }) {
 
 
     return (
-        <>
-            <Head>
-                <title>Characters page</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
+        <Layout>
             <main>
                 Characters page
                 <br />
@@ -62,7 +58,6 @@ export default function CharactersPage({ name, thumbnail }) {
             <footer>
                 footer
         </footer>
-
-        </>
+        </Layout>
     )
 }

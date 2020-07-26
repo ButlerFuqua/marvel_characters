@@ -69,6 +69,10 @@ const MenuToggle = styled.button`
   top: 0;
   right: 0;
   font-size: 1.2rem;
+
+  @media(min-width: 769px){
+    display: none;
+  }
 `
 
 

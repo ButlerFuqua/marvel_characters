@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import styled from 'styled-components'
 // import md5 from 'crypto-js/md5'
+import Layout from '../components/layout'
 
 // const ts = new Date().getTime()
 // const hash = md5(ts + process.env.PRI_KEY + process.env.PUB_KEY).toString()
@@ -161,11 +162,7 @@ export default function Home({ results }) {
 
 
   return (
-    <>
-      <Head>
-        <title>Marvel Comics and Characters</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout>
 
       <Wrapper>
 
@@ -230,6 +227,6 @@ export default function Home({ results }) {
           justify-content: center;
         }
       `}</style>
-    </>
+    </Layout>
   )
 }
