@@ -13,8 +13,22 @@ const Container = styled.div`
     border-right: 1px solid #000;
     height: 100%;
     overflow: auto;
-    // background: blue;
 
+    @media(max-width: 768px){
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: white;
+      min-height: 100vh;
+
+      transition: .2s;
+      right: 100vw;
+
+      &.shown{
+        right: 0
+      }
+    }
+    
   & ul {
     padding: 0;
     margin: 0;
@@ -50,14 +64,32 @@ const Input = styled.input`
   padding: 5px;
 `
 
+const MenuToggle = styled.button`
+  position: fixed;
+  top: 0;
+  right: 0;
+  font-size: 1.2rem;
+`
 
 
 export default function Sidebar({ results, onSeriesSelect, selectedSeries }) {
 
   const [seriesArray, setSeriesArray] = useState(results)
   const [filteredSeries, setFilteredSeries] = useState(results)
+  const [menuState, setMenuState] = useState(false)
 
 
+
+
+  const handleSeriesSelect = item => {
+
+    onSeriesSelect(item)
+
+    // Close menu
+    setMenuState(false)
+
+    console.log(menuState)
+  }
 
   const handleSearchChange = ({ target }) => {
 
@@ -70,13 +102,16 @@ export default function Sidebar({ results, onSeriesSelect, selectedSeries }) {
 
     // Change array
     setFilteredSeries(newFilteredSeries)
+
   }
+
 
 
   return (
     <>
 
-      <Container>
+      <Container className={menuState ? 'shown' : ''}>
+        <MenuToggle onClick={() => setMenuState(!menuState)}>Menu</MenuToggle>
 
         <Form>
           <label htmlFor="search">Start typing to search.</label>
@@ -86,7 +121,7 @@ export default function Sidebar({ results, onSeriesSelect, selectedSeries }) {
           {filteredSeries.map(item => (
             <li
               className={item.id === selectedSeries.id ? 'selected' : ``}
-              onClick={() => onSeriesSelect(item)}
+              onClick={() => handleSeriesSelect(item)}
               key={item.id}>
               <img src={`${item.thumbnail.path}/standard_small.${item.thumbnail.extension}`} alt={item.title} />
               {item.title}
