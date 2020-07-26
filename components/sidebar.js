@@ -121,7 +121,7 @@ export default function Sidebar({ results, onSeriesSelect, selectedSeries }) {
               className={item.id === selectedSeries.id ? 'selected' : ``}
               onClick={() => handleSeriesSelect(item)}
               key={item.id}>
-              <img src={`${item.thumbnail.path}/standard_small.${item.thumbnail.extension}`} alt={item.title} />
+              {/* <img src={`${item.thumbnail.path}/standard_small.${item.thumbnail.extension}`} alt={item.title} /> */}
               {item.title}
             </li>
           ))}
