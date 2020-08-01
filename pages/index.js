@@ -55,7 +55,7 @@ const Main = styled.main`
     padding: 1rem;
     width: 18rem;
     max-width:90%;
-    margin: auto;
+    margin: 1rem auto;
     text-align: center;
     border: 2px solid #393C49;
     display: flex;
@@ -67,7 +67,7 @@ const Main = styled.main`
     transition: .3s;
   }
   & ul li:hover{
-   border: 2px solid white;
+   border: 2px solid #A055BF;
   } 
 
   & ul li.selected {
@@ -171,7 +171,7 @@ export default function Home({ results }) {
                 <li key={item.id}>
                   <img src={`${item.thumbnail.path.replace('http', 'https')}/standard_large.${item.thumbnail.extension}`} alt={item.name} />
                   <Link href="/characters/[id]" as={`/characters/${item.id}`}>
-                    <a>{item.name}</a>
+                    <a style={{ color: '#A055BF', fontSize: '20px', marginTop: '1rem', textDecoration: 'none' }}>{item.name}</a>
                   </Link>
                 </li>
               ))
@@ -198,7 +198,7 @@ export default function Home({ results }) {
           font-size: 16px;
           color: white;
           font-family: 'Arial';
-          background: #393C49;
+          background: #131417;
         }
 
 

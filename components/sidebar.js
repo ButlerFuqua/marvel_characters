@@ -7,13 +7,12 @@ const Container = styled.div`
     border-right: 1px solid #000;
     height: 100%;
     overflow: auto;
-    background: #131417;
+    background: #56565E;
 
     @media(max-width: 768px){
       position: fixed;
       top: 0;
       width: 100%;
-      background: white;
       min-height: 100vh;
 
       transition: .2s;
@@ -30,11 +29,9 @@ const Container = styled.div`
   }
   & ul li {
     list-style: none;
-    padding: 1rem;
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     
 
 
@@ -61,8 +58,8 @@ const Container = styled.div`
   }
    
   &::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
+    background-color: #81618e;
+    outline: 1px solid #81618e;
     border-radius: 10px;
   }
 `
@@ -103,8 +100,6 @@ export default function Sidebar({ results, onSeriesSelect, selectedSeries }) {
 
     // Close menu
     setMenuState(false)
-
-    console.log(menuState)
   }
 
   const handleSearchChange = ({ target }) => {
@@ -139,8 +134,8 @@ export default function Sidebar({ results, onSeriesSelect, selectedSeries }) {
               className={item.id === selectedSeries.id ? 'selected' : ``}
               onClick={() => handleSeriesSelect(item)}
               key={item.id}>
-              {item.title}
-              <img src={`${item.thumbnail.path.replace('http', 'https')}/standard_small.${item.thumbnail.extension}`} alt={item.title} />
+              <img style={{ height: '100%' }} src={`${item.thumbnail.path.replace('http', 'https')}/standard_small.${item.thumbnail.extension}`} alt={item.title} />
+              <span style={{ padding: '1rem' }}>{item.title}</span>
             </li>
           ))}
         </ul>
