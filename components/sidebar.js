@@ -7,6 +7,7 @@ const Container = styled.div`
     border-right: 1px solid #000;
     height: 100%;
     overflow: auto;
+    background: #131417;
 
     @media(max-width: 768px){
       position: fixed;
@@ -33,19 +34,36 @@ const Container = styled.div`
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     
 
 
     transition: .3s;
   }
   & ul li:hover {
-    background: #ccc;
+    background: #393C49;
   }
   & ul li img {
     margin-right: 2px;
   }
   & ul li.selected {
-      background: #ccc;
+      background: #393C49;
+  }
+
+  &::-webkit-scrollbar {
+    width: .5rem;
+    background: #393C49
+    border: none;
+  }
+   
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+   
+  &::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+    border-radius: 10px;
   }
 `
 
@@ -121,8 +139,8 @@ export default function Sidebar({ results, onSeriesSelect, selectedSeries }) {
               className={item.id === selectedSeries.id ? 'selected' : ``}
               onClick={() => handleSeriesSelect(item)}
               key={item.id}>
-              <img src={`${item.thumbnail.path.replace('http', 'https')}/standard_small.${item.thumbnail.extension}`} alt={item.title} />
               {item.title}
+              <img src={`${item.thumbnail.path.replace('http', 'https')}/standard_small.${item.thumbnail.extension}`} alt={item.title} />
             </li>
           ))}
         </ul>

@@ -57,7 +57,7 @@ const Main = styled.main`
     max-width:90%;
     margin: auto;
     text-align: center;
-    border: 2px solid #fff;
+    border: 2px solid #393C49;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -67,7 +67,7 @@ const Main = styled.main`
     transition: .3s;
   }
   & ul li:hover{
-   border: 2px solid #000;
+   border: 2px solid white;
   } 
 
   & ul li.selected {
@@ -196,17 +196,16 @@ export default function Home({ results }) {
           padding: 0;
           margin: 0;
           font-size: 16px;
-          color: #333;
+          color: white;
           font-family: 'Arial';
+          background: #393C49;
         }
 
 
         * {
           box-sizing: border-box;
         }
-        img {
-          border-radius: 5px;
-        }
+
         .full_center{
           height: 100%;
           width: 100%;
