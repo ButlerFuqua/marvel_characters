@@ -1,5 +1,8 @@
 import styled from 'styled-components'
 import Layout from '../components/layout'
+import CharacterList from '../components/characterList'
+import LandingPage from '../components/landingPage'
+import SearchForm from '../components/searchForm'
 
 
 import { seriesResponse } from '../fakeapi/series'
@@ -7,7 +10,6 @@ import { charactersResponse } from '../fakeapi/characters'
 
 
 import { useState } from 'react'
-import Link from 'next/link'
 
 import Sidebar from '../components/sidebar'
 
@@ -42,45 +44,6 @@ const Main = styled.main`
   overflow: auto;
   padding-bottom: 1rem;
 
-  & ul {
-    padding: 0;
-    margin: 0;
-    min-height: 100vh;
-    overflow-x: hidden;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  & ul li {
-    list-style: none;
-    padding: 1rem;
-    width: 18rem;
-    max-width:90%;
-    margin: 1rem auto;
-    text-align: center;
-    border: 2px solid #393C49;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-
-    transition: .3s;
-  }
-  & ul li:hover{
-   border: 2px solid #A055BF;
-  } 
-
-  & ul li.selected {
-    background: #222;
-    color: #f1f1f1;
-  }
-
-  & ul li img {
-    width: 10rem;
-    max-width: 100%;
-  }
-
-
   & form{
     padding: 1rem;
 
@@ -96,15 +59,10 @@ const Footer = styled.footer`
   justify-content: center;
 `
 
-const Input = styled.input`
-  width: 100%;
-  padding: 5px;
-  font-size: 16px;
-  margin-top: 5px;
-  color: #333;
-`
 
-export default function Home({ results }) {
+
+export default function Home({ results, theme }) {
+
 
   const [selectedSeries, setSelectedSeries] = useState({})
   const [characters, setCharacters] = useState([])
@@ -118,7 +76,7 @@ export default function Home({ results }) {
 
     // filter based on value
     let newFilteredCharacters = [...characters]
-    newFilteredCharacters = newFilteredCharacters.filter(item => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1)
+    newFilteredCharacters = newFilteredCharacters.filter(character => character.name.toLowerCase().indexOf(value.toLowerCase()) > -1)
 
     // Change array
     setFilteredCharacters(newFilteredCharacters)
@@ -160,27 +118,14 @@ export default function Home({ results }) {
           selectedSeries={selectedSeries}
         />
 
-        <PageContent id="page_content">
+        <PageContent>
           <Main>
-            <form>
-              <label htmlFor="search">Start typing to search.</label>
-              <Input onChange={handleSearchChange} id="search" type="text" placeholder="Search..." />
-            </form>
-            <ul>
-              {filteredCharacters.length ? filteredCharacters.map(item => (
-                <li key={item.id}>
-                  <img src={`${item.thumbnail.path.replace('http', 'https')}/standard_large.${item.thumbnail.extension}`} alt={item.name} />
-                  <Link href="/characters/[id]" as={`/characters/${item.id}`}>
-                    <a style={{ color: '#A055BF', fontSize: '20px', marginTop: '1rem', textDecoration: 'none' }}>{item.name}</a>
-                  </Link>
-                </li>
-              ))
-                :
-                <div className="full_center">
-                  <p>Please select a series from the sidebar.</p>
-                </div>
-              }
-            </ul>
+            <SearchForm handleSearchChange={handleSearchChange} />
+            {filteredCharacters.length
+              ? <CharacterList filteredCharacters={filteredCharacters} />
+              :
+              <LandingPage />
+            }
           </Main>
 
           <Footer>
@@ -188,32 +133,6 @@ export default function Home({ results }) {
         </Footer>
         </PageContent>
       </Wrapper>
-
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-size: 16px;
-          color: white;
-          font-family: 'Arial';
-          background: #131417;
-        }
-
-
-        * {
-          box-sizing: border-box;
-        }
-
-        .full_center{
-          height: 100%;
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-      `}</style>
     </Layout>
   )
 }

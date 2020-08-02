@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import SeriesSearchForm from '../components/seriesSearchForm'
 
 import { useState } from 'react'
 
@@ -7,7 +8,7 @@ const Container = styled.div`
     border-right: 1px solid #000;
     height: 100%;
     overflow: auto;
-    background: #56565E;
+    background:  ${({ theme }) => theme.colors.medium};
 
     @media(max-width: 768px){
       position: fixed;
@@ -38,18 +39,18 @@ const Container = styled.div`
     transition: .3s;
   }
   & ul li:hover {
-    background: #393C49;
+    background: ${({ theme }) => theme.colors.primary};
   }
   & ul li img {
     margin-right: 2px;
   }
   & ul li.selected {
-      background: #393C49;
+      background: ${({ theme }) => theme.colors.primary};
   }
 
   &::-webkit-scrollbar {
     width: .5rem;
-    background: #393C49
+    background:  ${({ theme }) => theme.colors.medium}
     border: none;
   }
    
@@ -58,20 +59,12 @@ const Container = styled.div`
   }
    
   &::-webkit-scrollbar-thumb {
-    background-color: #81618e;
-    outline: 1px solid #81618e;
+    background-color:  ${({ theme }) => theme.colors.dim};
+    outline: 1px solid  ${({ theme }) => theme.colors.dim};
     border-radius: 10px;
   }
 `
 
-const Form = styled.form`
-  width: 100%;
-`
-
-const Input = styled.input`
-  width: 100%;
-  padding: 5px;
-`
 
 const MenuToggle = styled.button`
   position: fixed;
@@ -124,10 +117,7 @@ export default function Sidebar({ results, onSeriesSelect, selectedSeries }) {
       <Container className={menuState ? 'shown' : ''}>
         <MenuToggle onClick={() => setMenuState(!menuState)}>Menu</MenuToggle>
 
-        <Form>
-          <label htmlFor="search">Start typing to search.</label>
-          <Input onChange={handleSearchChange} id="search" type="text" placeholder="Search..." />
-        </Form>
+        <SeriesSearchForm handleSearchChange={handleSearchChange} />
         <ul>
           {filteredSeries.map(item => (
             <li
